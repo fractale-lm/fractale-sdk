@@ -6,8 +6,10 @@ shows the amnesic control next to it so you can see what the memory adds.
 
     python scripts/read_document.py <checkpoint.pt> <some_file> [n_tokens]
 """
+import pathlib
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))  # run from a bare clone
 from fractale import BankSession
 
 

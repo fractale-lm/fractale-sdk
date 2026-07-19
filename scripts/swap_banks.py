@@ -7,8 +7,10 @@ not the context window, is doing the work.
 
     python scripts/swap_banks.py <checkpoint.pt> <file_A> <file_B>
 """
+import pathlib
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))  # run from a bare clone
 from fractale import BankSession
 
 
