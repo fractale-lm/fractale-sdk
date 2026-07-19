@@ -1,0 +1,21 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0B060"/>
+      <stop offset="1" stop-color="#D96C4F"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.38" cy="0.38" r="0.9">
+      <stop offset="0" stop-color="#232636"/>
+      <stop offset="1" stop-color="#14161F"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#glow)"/>
+  <!-- nested self-similar squares, spiralling toward the write-corner -->
+  <g fill="none" stroke="url(#amber)" stroke-linejoin="round">
+    <rect x="76"  y="76"  width="360" height="360" rx="56" stroke-width="22"/>
+    <rect x="148" y="148" width="232" height="232" rx="38" stroke-width="17" opacity="0.82"/>
+    <rect x="204" y="204" width="144" height="144" rx="26" stroke-width="13" opacity="0.64"/>
+    <rect x="244" y="244" width="80"  height="80"  rx="16" stroke-width="10" opacity="0.48"/>
+  </g>
+  <rect x="268" y="268" width="32" height="32" rx="8" fill="url(#amber)"/>
+</svg>
