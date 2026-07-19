@@ -1,5 +1,7 @@
 # Fractale
 
+![Fractale — the model reads page by page, writes 8 self-written notes, and thinks through them](assets/fractale-banner.svg)
+
 **Language models whose long-term memory is written by the model itself.**
 
 A Fractale model reads a long document one page at a time and is allowed
