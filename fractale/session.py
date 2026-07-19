@@ -81,17 +81,35 @@ class BankSession:
 
     # ── generation from the bank ─────────────────────────────────────────────
     @torch.no_grad()
-    def continuation(self, n_tokens: int = 16, use_bank: bool = True) -> str:
-        """Greedy-decode what the model expects the NEXT chunk to open with,
-        from blank input — the bank is the only source of information.
+    def continuation(self, n_tokens: int = 16, use_bank: bool = True,
+                     temperature: float = 0.7, top_p: float = 0.95,
+                     seed: Optional[int] = None) -> str:
+        """Decode what the model expects the NEXT chunk to open with, from
+        blank input — the bank is the only source of information.
         `use_bank=False` gives the amnesic control (fresh bank), so the
-        difference between the two IS the memory."""
+        difference between the two IS the memory.
+
+        Sampling (nucleus, default temperature 0.7 / top_p 0.95) is the
+        default: a base model decoded greedily falls into repetition loops.
+        `temperature=0` gives deterministic greedy decoding."""
         bank = self.bank if use_bank else None
+        gen = None
+        if seed is not None:
+            gen = torch.Generator(device="cpu").manual_seed(seed)
         x = torch.full((1, n_tokens), self.blank_id, dtype=torch.long, device=self.device)
         out_ids = []
         for i in range(n_tokens):
             o = self.model(x, init_mem=bank)
-            nxt = int(o["logits"].float()[0, i].argmax(-1))
+            logits = o["logits"].float()[0, i]
+            if temperature <= 0:
+                nxt = int(logits.argmax(-1))
+            else:
+                probs = torch.softmax(logits / temperature, dim=-1)
+                sp, si = probs.sort(descending=True)
+                keep = (sp.cumsum(-1) - sp) < top_p   # smallest set covering top_p
+                sp = sp * keep
+                pick = torch.multinomial(sp.cpu(), 1, generator=gen)
+                nxt = int(si[int(pick)])
             out_ids.append(nxt)
             if i + 1 < n_tokens:
                 x[0, i + 1] = nxt

@@ -2,7 +2,7 @@
 # Re-sync the vendored inference core from the research repo.
 # Usage: tools/vendor_core.sh [path-to-thought-bank]
 set -euo pipefail
-SRC="${1:-../thought-bank}/deepseek_v4_mini"
+SRC="${1:-../thought-bank}/deepseek_v4_mini"   # NB: vendor from the branch that TRAINED the target ckpt
 DST="$(dirname "$0")/../fractale/_core"
 for f in config.py mhc.py attention.py moe.py memory.py model.py; do
   cp "$SRC/$f" "$DST/$f"
