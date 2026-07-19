@@ -17,13 +17,13 @@ the memory as a first-class object you can save, restore, reset, swap and
 inspect. Inference differs from a classic LLM — you carry a bank state
 across calls instead of a growing prompt — and this kit owns that loop.
 
-- **Models:** [`kkuette/Fractale-350M-base`](https://huggingface.co/kkuette/Fractale-350M-base) *(release pending)*
+- **Models:** [`fractale-lm/Fractale-350M-base`](https://huggingface.co/fractale-lm/Fractale-350M-base) *(release pending)*
 - **Research** (training code, paper, findings, probes): [kkuette/thought-bank](https://github.com/kkuette/thought-bank)
 
 ## Install
 
 ```bash
-git clone https://github.com/kkuette/fractale && cd fractale
+git clone https://github.com/fractale-lm/fractale && cd fractale
 pip install -e .
 ```
 
@@ -32,7 +32,7 @@ pip install -e .
 ```python
 from fractale import BankSession
 
-sess = BankSession.from_pretrained("kkuette/Fractale-350M-base")
+sess = BankSession.from_pretrained("fractale-lm/Fractale-350M-base")
 
 # Read anything, any length — the bank accumulates, no growing prompt.
 sess.read(open("mystery_novel_ch1-9.txt").read())
