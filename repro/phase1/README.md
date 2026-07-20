@@ -63,6 +63,14 @@ yaml if you have less than 80 GB).
   crash). See the "Training incident, disclosed" section of the
   [model card](https://huggingface.co/fractale-lm/Fractale-350M-base) for
   the full story.
+- **If you get far more NaN skips than that, lower the LR.** Halve `lr` and
+  `muon_lr` in the yaml, and/or bring `wsd_decay_start` forward (this run
+  ended up at `lr: 1.5e-4`, `muon_lr: 3.75e-4`, decay from step 2000 — after
+  exactly this failure mode at full LR). Watch the `[nan-guard]` frequency
+  in the log: a few per thousand steps early on is fine; a rising streak at
+  full LR means the weights are drifting into the bf16 overflow region and
+  the update stream is dying — resume from the last clean checkpoint with a
+  lower LR rather than letting it run.
 
 ## Evaluate what you trained
 
