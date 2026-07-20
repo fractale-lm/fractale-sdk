@@ -77,6 +77,7 @@ fractale/
   session.py     ← BankSession: the chunk-feed / bank-carry loop, save/load/swap/inspect
   _core/         ← vendored inference modules (source of truth: thought-bank repo)
 scripts/         ← runnable demos
+repro/phase1/    ← reproduce the 350M phase-1 pretrain (8×A100, pinned commit)
 tools/           ← vendor_core.sh (re-sync _core from the research repo)
 ```
 
