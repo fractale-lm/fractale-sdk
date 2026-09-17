@@ -17,13 +17,14 @@ the memory as a first-class object you can save, restore, reset, swap and
 inspect. Inference differs from a classic LLM — you carry a bank state
 across calls instead of a growing prompt — and this kit owns that loop.
 
-- **Models:** [`fractale-lm/Fractale-350M-base`](https://huggingface.co/fractale-lm/Fractale-350M-base) *(release pending)*
-- **Research** (training code, paper, findings, probes): [kkuette/thought-bank](https://github.com/kkuette/thought-bank)
+- **Models:** [`fractale-lm/Fractale-350M-base`](https://huggingface.co/fractale-lm/Fractale-350M-base)
+- **Paper** (mechanism, controls, baselines): [DOI 10.5281/zenodo.21225721](https://doi.org/10.5281/zenodo.21225721)
+- **Public record** (preprint, pre-registered protocol): [kkuette/thought-bank](https://github.com/kkuette/thought-bank)
 
 ## Install
 
 ```bash
-git clone https://github.com/fractale-lm/fractale && cd fractale
+git clone https://github.com/fractale-lm/fractale-sdk && cd fractale-sdk
 pip install -e .
 ```
 
@@ -67,18 +68,17 @@ read — domain, register, structure, announced facts — not a verbatim copy.
 Expect the with-bank continuation to be *locked onto the right document and
 style* while the amnesic control drifts generic; do not expect it to quote
 line 3 word for word. Quantitatively the bank shifts the model's predictive
-distribution by several nats on held-out documents (details, controls and
-reproduction commands: [research repo](https://github.com/kkuette/thought-bank)).
+distribution by several nats on held-out documents (details and controls:
+[the paper](https://doi.org/10.5281/zenodo.21225721)).
 
 ## Repo layout
 
 ```
 fractale/
   session.py     ← BankSession: the chunk-feed / bank-carry loop, save/load/swap/inspect
-  _core/         ← vendored inference modules (source of truth: thought-bank repo)
+  _core/         ← vendored inference modules, re-generated from a pinned export
 scripts/         ← runnable demos
-repro/phase1/    ← reproduce the 350M phase-1 pretrain (8×A100, pinned commit)
-tools/           ← vendor_core.sh (re-sync _core from the research repo)
+tools/           ← re-sync _core from its pinned export
 ```
 
 ## License
